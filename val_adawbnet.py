@@ -26,15 +26,11 @@ unloader = transforms.ToPILImage()  # reconvert into PIL image
 parser = argparse.ArgumentParser()
 "BSET: BASE_Trans_3_8_256_OR_awl3_bz4"
 parser.add_argument('--model_type', default='BASE_Trans_3_8_256_OR_awl3_bz4', type=str)
-parser.add_argument('--dataset_type', default='cube1', type=str)
-"/home/wsy/folds/jint test_cube_.npy"
-"/home/wsy/sty2/folds/test_set1.npy or set2.npy"
-parser.add_argument('--dataset_dir', default='/home/wsy/sty2/folds/test_cube.npy', type=str)
+parser.add_argument('--dataset_type', default='mixed', type=str)
+parser.add_argument('--dataset_dir', default='test_cube.npy', type=str)
 parser.add_argument('--numcluster', default=256, type=int)
 args = parser.parse_args()
 
-# 加载时间最近的模型文件
-# 加载时间最近的模型文件
 def load_latest_model_by_type(model_dir, model, model_type):
     pattern = f"*{model_type}*"
     model_files = glob.glob(os.path.join(model_dir, pattern))
@@ -94,53 +90,10 @@ def outOfGamutClipping(I):
 
 # 加载数据集
 def load_test_data(data_dir):
-    # 假设数据是 numpy 数组或者图像，进行相应的处理
-    # 此处示例使用随机生成数据代替
     files = np.load(data_dir,
                     allow_pickle=True).item()
     x_test_list = files['input']
     y_test_list = files['awb']
-
-    # x_dir = '/dataset/set2/Set2_input_images/'
-    # y_dir = '/dataset/set2/Set2_gt_images/'
-    # img_ex1 = 'DSLR_'
-    # img_list1 = ['01009','01010','01011','01012','01013','01014','01016','01017','01020','01022','01023',
-    #             '01024','01025','01026','01027','01028',
-    #             '01111','01113','01114','01115','01116','01117','01118','01414','01415','01416','01417',
-    #             '01418','01419','01426','01427','01428','01429',
-    #             '01470','01471','01472','01475','01477','01479','01480','01482','01483','01484','01485',
-    #             '01625','01626','01627','01629','01630','01632','01634','01635',
-    #              '00955','00952']
-    # img_ex2 = 'Mobile_'
-    # img_list2 = ['00798','00799','00800','00803','00805','00806','00807','00808','00809','00810',
-    #              '00813','008134','00815','00816','00818','00819','00820','00822','00823','00824','00825',
-    #              '00868','00869','00870','00872','00873','00874',
-    #              '00973','00974','00975','00976','00977','00978','00981','00982','00983','00984','00985','00986',
-    #              '00994','00996','00997','00998','01000',
-    #              '00801','00802']
-    # img_w = '.png'
-    #
-    # x_test_list, y_test_list = [],[]
-    # for name in img_list1:
-    #     x_test_list.append(x_dir + img_ex1 + name + img_w)
-    #     y_test_list.append(y_dir + img_ex1 + name + img_w)
-    #
-    # for name in img_list2:
-    #     x_test_list.append(x_dir + img_ex2 + name + img_w)
-    #     y_test_list.append(y_dir + img_ex2 + name + img_w)
-    #
-    # x_test_list = np.array(x_test_list)
-    # y_test_list = np.array(y_test_list)
-
-    # x_test_list = files['name']
-    # y_test_list = files['gt']
-    # x_test_list = np.array([path.replace('/dataset/lcx/cube/Cube_input_images/', '/dataset/cube/input/') for path in x_test_list])
-    # y_test_list = np.array([path.replace('/dataset/cube/gt//', '/dataset/cube/gt/') for path in y_test_list])
-    # #
-    # save_ = {}
-    # save_['input'] = x_test_list
-    # save_['awb'] = y_test_list
-    # np.save('/home/wsy/sty2/folds/test_set2_multi.npy', save_)
 
     return x_test_list, y_test_list
 
